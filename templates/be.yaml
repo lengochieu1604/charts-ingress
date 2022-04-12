@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp4-deploy
+  namespace: default 
+spec:
+  selector:
+    matchLabels:
+      app: webapp4
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp4
+    spec:
+      containers:
+      - name: webapp4
+        image: acrlengochieu.azurecr.io/be
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: webapp4-svc
+  namespace: default
+spec:
+  selector:
+    app: webapp4
+  ports:
+  - port: 3000
+  type: ClusterIP 

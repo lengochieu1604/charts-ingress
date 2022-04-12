@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp3-deploy
+  namespace: default 
+spec:
+  selector:
+    matchLabels:
+      app: webapp3
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp3
+    spec:
+      containers:
+      - name: webapp3
+        image: acrlengochieu.azurecr.io/fe
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4200
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: webapp3-svc
+  namespace: default
+spec:
+  selector:
+    app: webapp3
+  ports:
+  - port: 4200
+  type: LoadBalancer 
